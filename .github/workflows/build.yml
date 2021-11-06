@@ -3,6 +3,10 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
+
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
 jobs:
@@ -18,6 +22,15 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
+      - name: GITHUB CONTEXT
+        env:
+          GITHUB_CONTEXT: ${{ toJson(github) }}
+        run: echo "$GITHUB_CONTEXT"
+      - name: Get commit message
+        run: |
+          echo ::set-env name=commitmsg::$(git log --format=%B -n 1 ${{ github.event.after }})
+      - name: Show commit message
+        run: echo $commitmsg
       - name: Checkout [dev branch] code
         if: contains( env.commitmsg , '[dev]' ) || contains(github.event.pull_request.title, '[dev]')
         run: |
