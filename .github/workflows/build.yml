@@ -26,17 +26,17 @@ jobs:
       - name: Show commit message
         run: echo $(git log --format=%B -n 1)
       - name: Checkout [dev branch] code
-        # if: startsWith( env.commitmsg , 'release(dev)' ) || contains(github.event.pull_request.title, 'release(dev)' )
+        if: startsWith( env.commitmsg , 'release(dev)' )
         run: |
-          bash ./scripts/checkout.sh -s "dev"
+          bash ./scripts/checkout.sh "dev"
       - name: Checkout [test branch] code
         if: startsWith( env.commitmsg , 'release(test)' ) || contains(github.event.pull_request.title, 'release(test)' )
         run: |
-          bash ./scripts/checkout.sh -s "test"
+          bash ./scripts/checkout.sh "test"
       - name: Checkout [master branch] code
         if: startsWith( env.commitmsg , 'release(master)' ) || contains(github.event.pull_request.title, 'release(master)' )
         run: |
-          bash ./scripts/checkout.sh -s "master"
+          bash ./scripts/checkout.sh "master"
       - name: Install npm dependencies
         run: |
           npm install
