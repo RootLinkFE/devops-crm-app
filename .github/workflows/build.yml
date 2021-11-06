@@ -31,15 +31,15 @@ jobs:
       - name: Checkout [dev branch] code
         # if: startsWith( env.commitmsg , 'release(dev)' )
         run: |
-          bash ./scripts/checkout.sh "dev"
+          bash ./checkout.sh "dev"
       - name: Checkout [test branch] code
         if: startsWith( env.commitmsg , 'release(test)' ) || contains(github.event.pull_request.title, 'release(test)' )
         run: |
-          bash ./scripts/checkout.sh "test"
+          bash ./checkout.sh "test"
       - name: Checkout [master branch] code
         if: startsWith( env.commitmsg , 'release(master)' ) || contains(github.event.pull_request.title, 'release(master)' )
         run: |
-          bash ./scripts/checkout.sh "master"
+          bash ./checkout.sh "master"
       - name: Install npm dependencies
         run: |
           npm install
