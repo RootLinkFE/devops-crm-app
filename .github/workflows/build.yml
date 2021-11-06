@@ -27,7 +27,7 @@ jobs:
       #     GITHUB_CONTEXT: ${{ toJson(github) }}
       #   run: echo "$GITHUB_CONTEXT"
       - name: Show commit message
-        run: echo $commitmsg
+        run: echo ${{env.commitmsg}}
       - name: Checkout [dev branch] code
         if: contains( env.commitmsg , '[dev]' ) || contains(github.event.pull_request.title, '[dev]')
         run: |
