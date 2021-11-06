@@ -20,6 +20,8 @@ jobs:
         run: |
           bash ./scripts/checkout.sh
           npm install
+        env:
+          GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
       - name: Build Android Release
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
