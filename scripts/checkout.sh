@@ -18,9 +18,14 @@ pwd
 
 git clone  $repositoryUrl
 
+cd g-crm-app 
+
 git checkout $branchName
 
 log "$(git branch)"
+
+cd ..  
+
 
 cd g-crm-app && mv * ../ 
 
