@@ -15,7 +15,7 @@ pwd
 
 git clone  $repositoryUrl
 
-cd g-crm-app
+cd g-crm-app && mv * ../ 
 
 pwd
 
