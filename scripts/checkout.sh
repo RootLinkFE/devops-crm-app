@@ -15,11 +15,9 @@ pwd
 
 git clone  $repositoryUrl
 
+cd g-crm-app
+
 pwd
-
-ls -l
-
-mv g-crm-app ./
 
 ls -l
 
