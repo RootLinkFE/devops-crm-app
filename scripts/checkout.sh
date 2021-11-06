@@ -7,13 +7,13 @@ function log() {
   echo "$(date)>>>>$@"
 }
 
-GITLAB_REPO_URL=$GITLAB_REPO_URL
+repositoryUrl="${GITLAB_REPO_URL}"
 
-log $GITLAB_REPO_URL
+log $repositoryUrl
 
 pwd
 
-git clone  $GITLAB_REPO_URL
+git clone  $repositoryUrl
 
 pwd
 
