@@ -19,15 +19,15 @@ jobs:
     steps:
       - uses: actions/checkout@v2
       - name: Checkout [dev branch] code
-        if: contains(env.commitmsg, '[dev]')
+        if: contains( env.commitmsg , '[dev]' ) || contains(github.event.pull_request.title, '[dev]')
         run: |
           bash ./scripts/checkout.sh -s "dev"
       - name: Checkout [test branch] code
-        if: contains(env.commitmsg, '[test]')
+        if: contains( env.commitmsg , '[test]' ) || contains(github.event.pull_request.title, '[test]')
         run: |
           bash ./scripts/checkout.sh -s "test"
       - name: Checkout [master branch] code
-        if: contains(env.commitmsg, '[master]')
+        if: contains( env.commitmsg , '[master]' ) || contains(github.event.pull_request.title, '[master]')
         run: |
           bash ./scripts/checkout.sh -s "master"
       - name: Install npm dependencies
