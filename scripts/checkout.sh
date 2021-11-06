@@ -24,8 +24,9 @@ git checkout $branchName
 
 log "$(git branch)"
 
-cd ..  
+git pull
 
+cd ..  
 
 cd g-crm-app && mv * ../ 
 
