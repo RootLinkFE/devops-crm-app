@@ -44,6 +44,9 @@ jobs:
       - name: Install npm dependencies
         run: |
           npm install
+      - name: Start Build Apk Message
+        run: |
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       - name: Build Android Release
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
