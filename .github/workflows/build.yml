@@ -10,15 +10,7 @@ env:
   UPLOAD_TOKEN_URL: ${{ secrets.UPLOAD_TOKEN_URL }}
   UPLOAD_URL: ${{ secrets.UPLOAD_URL }}
 jobs:
-  # install-and-test:
-  #   runs-on: ubuntu-latest
-  #   steps:
-  #     - uses: actions/checkout@v2
-  #     - name: Install npm dependencies
-  #       run: |
-  #         npm install
   build-android:
-    # needs: install-and-test
     runs-on: ubuntu-latest
     steps:
       - name: Checkout
@@ -26,14 +18,14 @@ jobs:
       - name: Get commit message
         run: |
           GIT_MESSAGE="$(git log --format=%B -n 1)"
-          aMESSAGE=${{env.commitmsg}}
-          echo "aMESSAGE=$aMESSAGE" >> $GITHUB_ENV
+          date_str=$(date "+%Y-%m-%d %H:%M:%S")
+          seconds=$(date -d "$date_str" +%s)
+          seconds_new=$(expr $seconds + 28800) 
           echo "COMMIT_MESSAGE=$GIT_MESSAGE" >> $GITHUB_ENV
-          echo "BUILD_TIME=$(date +v-%Y-%m-%d-%H%M)" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date -d @$seconds_new "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
       - name: Show commit message
         run: |
           echo "$COMMIT_MESSAGE"
-          echo "$aMESSAGE"
           echo "$BUILD_TIME"
       - name: Checkout  code
         run: |
@@ -50,23 +42,24 @@ jobs:
       #   if: startsWith( env.commitmsg , 'release(master)' ) || contains(github.event.pull_request.title, 'release(master)' )
       #   run: |
       #     bash ./checkout.sh "master"
-      - name: extract version number
-        run: |
-          jq -r '"BUILD_VERSION=\(.version)"' package.json >> $GITHUB_ENV
       - name: Install npm dependencies
         run: |
           npm install
       - name: Build Android Release
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
-      - name: Send Artifact
+      - name: Upload Artifact
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      - name: Send Artifact Success
+        run: |
+          npm i request
+          node ./send-success.js
+      - name: Upload Artifact to Cloud
         run: |
           node ./scripts/send-file.js
-      # - name: Upload Artifact
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: app-release.apk
-      #     path: android/app/build/outputs/apk/release/
       - name: on failure
         if: ${{ failure() }}
         run: |

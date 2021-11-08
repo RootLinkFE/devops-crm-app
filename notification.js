@@ -57,7 +57,7 @@ function notificationFailed(message, subject) {
   const body = {
     msgtype: 'markdown',
     markdown: {
-      content: `<font color="comment">${subject}</font>>**失败原因**：<font color="info">${message}</font>`,
+      content: `<font color="comment">${subject}</font>\n>**失败原因**：<font color="info">${message}</font>`,
     },
   };
   requestWebhook(body);
