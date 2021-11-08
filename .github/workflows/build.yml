@@ -32,18 +32,21 @@ jobs:
           echo "commitmsg=${COMMIT_MESSAGE}" >> $GITHUB_ENV
       - name: Show commit message
         run: echo "$commitmsg"
-      - name: Checkout [dev branch] code
-        # if: startsWith( env.commitmsg , 'release(dev)' )
+      - name: Checkout  code
         run: |
-          bash ./checkout.sh "dev" ${{ env.commitmsg }}
-      - name: Checkout [test branch] code
-        if: startsWith( env.commitmsg , 'release(test)' ) || contains(github.event.pull_request.title, 'release(test)' )
-        run: |
-          bash ./checkout.sh "test"
-      - name: Checkout [master branch] code
-        if: startsWith( env.commitmsg , 'release(master)' ) || contains(github.event.pull_request.title, 'release(master)' )
-        run: |
-          bash ./checkout.sh "master"
+          bash ./checkout.sh
+      # - name: Checkout [dev branch] code
+      #   if: startsWith( env.commitmsg , 'release(dev)' )
+      #   run: |
+      #     bash ./checkout.sh "dev" ${{ env.commitmsg }}
+      # - name: Checkout [test branch] code
+      #   if: startsWith( env.commitmsg , 'release(test)' ) || contains(github.event.pull_request.title, 'release(test)' )
+      #   run: |
+      #     bash ./checkout.sh "test"
+      # - name: Checkout [master branch] code
+      #   if: startsWith( env.commitmsg , 'release(master)' ) || contains(github.event.pull_request.title, 'release(master)' )
+      #   run: |
+      #     bash ./checkout.sh "master"
       - name: Install npm dependencies
         run: |
           npm install
