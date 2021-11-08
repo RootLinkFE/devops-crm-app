@@ -31,7 +31,7 @@ elif [[ $commitmsg == $devBranch ]];then
     echo "包含[dev]"
     git clone -b dev $repositoryUrl
 else
-    echo "包含[dev]"
+    echo "默认执行dev分支代码"
     git clone -b dev $repositoryUrl
 fi
 
