@@ -4,11 +4,11 @@
 
 利用 Action 构建私库 gitlab rn app 代码
 
-## 使用技巧
+## 使用说明
 
 利用 git message 提交信息区分构建不同环境分支代码
 
-建议修改文件 `CHANGELOG.md`
+建议修改文件 `CHANGELOG.md` ，内容随便写，日记信息按下边要求提交即可（如果有过构建记录，点击`Action`栏，重新执行就可以免去这些步骤）。
 
 git message 关键词区分说明：
 
