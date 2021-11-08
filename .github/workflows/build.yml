@@ -21,7 +21,7 @@ jobs:
           seconds=$(date -d "$date_str" +%s)
           seconds_new=$(expr $seconds + 28800) 
           echo "COMMIT_MESSAGE=$GIT_MESSAGE" >> $GITHUB_ENV
-          echo "BUILD_TIME=$(date -d @$seconds_new "+%Y-%m-%d %H:%M:%S")" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date -d @$seconds_new "+%Y-%m-%d_%H_%M_%S")" >> $GITHUB_ENV
       - name: Show commit message
         run: |
           echo "$COMMIT_MESSAGE"
