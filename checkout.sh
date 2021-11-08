@@ -18,16 +18,16 @@ function log() {
 # 克隆分支代码
 log "${commitmsg}"
 
-if [[ $commitmsg == *$testBranch* ]];then
+if [[ $commitmsg =~ $testBranch ]];then
     echo "包含[test]"
     git clone -b test $repositoryUrl
-elif [[ $commitmsg == *$masterBranch* ]];then
+elif [[ $commitmsg  =~ $masterBranch ]];then
     echo "包含[master]"
     git clone -b master $repositoryUrl
-elif [[ $commitmsg == *$prodBranch* ]];then
+elif [[ $commitmsg  =~ $prodBranch ]];then
     echo "包含[prod]"
     git clone -b prod $repositoryUrl
-elif [[ $commitmsg == *$devBranch* ]];then
+elif [[ $commitmsg  =~ $devBranch ]];then
     echo "包含[dev]"
     git clone -b dev $repositoryUrl
 else

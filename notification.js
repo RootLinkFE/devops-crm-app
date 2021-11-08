@@ -20,7 +20,7 @@ function requestWebhook(body, cb) {
         cb();
       }
       console.log('发送成功');
-    },
+    }
   );
 }
 
@@ -57,7 +57,7 @@ function notificationFailed(message, subject) {
   const body = {
     msgtype: 'markdown',
     markdown: {
-      content: `<font color="info">${subject}</font>>**失败原因**：<font color="info">${message}</font>`,
+      content: `<font color="comment">${subject}</font>>**失败原因**：<font color="info">${message}</font>`,
     },
   };
   requestWebhook(body);
