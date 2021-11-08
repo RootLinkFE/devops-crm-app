@@ -3,40 +3,39 @@
 
 set -e
 
+repositoryUrl="${GITLAB_REPO_URL}"
 branchName=${1}
-dev='[dev]'
-test='[test]'
-master='[master]'
-prod='[prod]'
+devBranch='[dev]'
+testBranch='[test]'
+masterBranch='[master]'
+prodBranch='[prod]'
 
 function log() {
   echo "$(date)>>>>$@"
 }
 
-repositoryUrl="${GITLAB_REPO_URL}"
 
-# 克隆代码
-git clone  $repositoryUrl
-
-
-# 切换分支
+# 克隆分支代码
 log "${commitmsg}"
-cd g-crm-app 
 
-if [[ $commitmsg == *$test* ]];then
+if [[ $commitmsg == *$testBranch* ]];then
     echo "包含[test]"
-    git checkout test
-elif [[ $commitmsg == *$master* ]];then
+    git clone -b test $repositoryUrl
+elif [[ $commitmsg == *$masterBranch* ]];then
     echo "包含[master]"
-    git checkout master
-elif [[ $commitmsg == *$prod* ]];then
+    git clone -b master $repositoryUrl
+elif [[ $commitmsg == *$prodBranch* ]];then
     echo "包含[prod]"
-    git checkout prod
+    git clone -b prod $repositoryUrl
+elif [[ $commitmsg == *$devBranch* ]];then
+    echo "包含[dev]"
+    git clone -b dev $repositoryUrl
 else
     echo "包含[dev]"
-    git checkout dev
+    git clone -b dev $repositoryUrl
 fi
 
+cd g-crm-app 
 
 log "$(git branch)"
 # 拉取最新代码

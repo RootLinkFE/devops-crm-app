@@ -1,4 +1,4 @@
-name: react-native-android-build-apk
+name: build-apk
 on:
   push:
     branches:
@@ -61,3 +61,7 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
+      - name: on failure
+        if: ${{ failure() }}
+        run: |
+          node ./scripts/send-error.js
