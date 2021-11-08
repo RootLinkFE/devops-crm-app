@@ -16,6 +16,7 @@ git message 关键词区分说明：
 - 关键词：`[test]` 时，构建 `test` 分支
 - 关键词：`[master]` 时，构建 `master` 分支
 - 关键词：`[prod]` 时，构建 `prod` 分支
+- 关键词：`[skip ci]` 时，不会触发 Action 流程
 
 构建成功后，项目消息推送群会有如下信息：
 
