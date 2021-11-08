@@ -3,9 +3,6 @@ on:
   push:
     branches:
       - master
-  pull_request:
-    branches:
-      - master
 
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
@@ -28,11 +25,13 @@ jobs:
         uses: actions/checkout@v2
       - name: Get commit message
         run: |
-          COMMIT_MESSAGE=$(git log --format=%B -n 1)
-          echo "commitmsg=${COMMIT_MESSAGE}" >> $GITHUB_ENV
-          echo "EOF" >> $GITHUB_ENV
+          GIT_MESSAGE="${{ env.commitmsg }}"
+          echo "COMMIT_MESSAGE=$GIT_MESSAGE" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date +v-%Y-%m-%d-%H%M)" >> $GITHUB_ENV
       - name: Show commit message
-        run: echo "$commitmsg"
+        run: |
+          echo "$commitmsg"
+          echo "$BUILD_TIME"
       - name: Checkout  code
         run: |
           bash ./checkout.sh
