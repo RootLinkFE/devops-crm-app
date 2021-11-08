@@ -3,7 +3,6 @@ on:
   push:
     branches:
       - master
-
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
   WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
@@ -57,10 +56,10 @@ jobs:
         run: |
           npm i request
           node ./send-success.js
-      - name: Upload Artifact to Cloud
+      - name: Upload Apk & Send message to WeCom Group Chat
         run: |
           node ./scripts/send-file.js
-      - name: on failure
+      - name: On Failure
         if: ${{ failure() }}
         run: |
           npm i request
