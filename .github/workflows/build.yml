@@ -52,10 +52,10 @@ jobs:
         with:
           name: app-release.apk
           path: android/app/build/outputs/apk/release/
-      - name: Send Artifact Success
+      - name: Upload Artifact Success
         run: |
           npm i request
-          node ./send-success.js
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
       - name: Upload Apk & Send message to WeCom Group Chat
         run: |
           node ./scripts/send-file.js
