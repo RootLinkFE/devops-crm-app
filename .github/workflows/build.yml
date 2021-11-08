@@ -12,7 +12,6 @@ env:
   WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
   UPLOAD_TOKEN_URL: ${{ secrets.UPLOAD_TOKEN_URL }}
   UPLOAD_URL: ${{ secrets.UPLOAD_URL }}
-  commitmsg: ${{ env.commitmsg }}
 jobs:
   # install-and-test:
   #   runs-on: ubuntu-latest
@@ -32,7 +31,7 @@ jobs:
       - name: Checkout [dev branch] code
         # if: startsWith( env.commitmsg , 'release(dev)' )
         run: |
-          bash ./checkout.sh "dev"
+          bash ./checkout.sh "dev" ${{ env.commitmsg }}
       - name: Checkout [test branch] code
         if: startsWith( env.commitmsg , 'release(test)' ) || contains(github.event.pull_request.title, 'release(test)' )
         run: |
