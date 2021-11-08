@@ -4,6 +4,7 @@
 set -e
 
 branchName=${1}
+commitmsg=${2}
 
 function log() {
   echo "$(date)>>>>$@"
@@ -11,6 +12,7 @@ function log() {
 
 repositoryUrl="${GITLAB_REPO_URL}"
 
+log $commitmsg
 log $repositoryUrl
 log $branchName
 
