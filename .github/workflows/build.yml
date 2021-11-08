@@ -56,11 +56,11 @@ jobs:
       - name: Send Artifact
         run: |
           node ./scripts/send-file.js
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/
+      # - name: Upload Artifact
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: app-release.apk
+      #     path: android/app/build/outputs/apk/release/
       - name: on failure
         if: ${{ failure() }}
         run: |
