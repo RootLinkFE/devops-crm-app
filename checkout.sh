@@ -5,10 +5,10 @@ set -e
 
 repositoryUrl="${GITLAB_REPO_URL}"
 branchName=${1}
-devBranch='[dev]'
-testBranch='[test]'
-masterBranch='[master]'
-prodBranch='[prod]'
+devBranch='dev'
+testBranch='test'
+masterBranch='master'
+prodBranch='prod'
 
 function log() {
   echo "$(date)>>>>$@"
@@ -19,16 +19,16 @@ function log() {
 log "${commitmsg}"
 
 if [[ $commitmsg == $testBranch ]];then
-    echo "包含[test]"
+    echo "包含test"
     git clone -b test $repositoryUrl
 elif [[ $commitmsg == $masterBranch ]];then
-    echo "包含[master]"
+    echo "包含master"
     git clone $repositoryUrl
 elif [[ $commitmsg == $prodBranch ]];then
     echo "包含[prod]"
     git clone -b prod $repositoryUrl
 elif [[ $commitmsg == $devBranch ]];then
-    echo "包含[dev]"
+    echo "包含dev"
     git clone -b dev $repositoryUrl
 else
     echo "默认执行dev分支代码"
