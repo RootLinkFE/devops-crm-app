@@ -23,7 +23,7 @@ if [[ $commitmsg == $testBranch ]];then
     git clone -b test $repositoryUrl
 elif [[ $commitmsg == $masterBranch ]];then
     echo "包含[master]"
-    git clone -b master $repositoryUrl
+    git clone $repositoryUrl
 elif [[ $commitmsg == $prodBranch ]];then
     echo "包含[prod]"
     git clone -b prod $repositoryUrl
