@@ -64,4 +64,5 @@ jobs:
       - name: on failure
         if: ${{ failure() }}
         run: |
+          npm i request
           node ./send-error.js
