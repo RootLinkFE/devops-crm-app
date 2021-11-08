@@ -30,6 +30,7 @@ jobs:
         run: |
           COMMIT_MESSAGE=$(git log --format=%B -n 1)
           echo "commitmsg=${COMMIT_MESSAGE}" >> $GITHUB_ENV
+          echo "EOF" >> $GITHUB_ENV
       - name: Show commit message
         run: echo "$commitmsg"
       - name: Checkout  code
@@ -47,6 +48,9 @@ jobs:
       #   if: startsWith( env.commitmsg , 'release(master)' ) || contains(github.event.pull_request.title, 'release(master)' )
       #   run: |
       #     bash ./checkout.sh "master"
+      - name: extract version number
+        run: |
+          jq -r '"BUILD_VERSION=\(.version)"' package.json >> $GITHUB_ENV
       - name: Install npm dependencies
         run: |
           npm install
