@@ -1,6 +1,7 @@
 const { notificationFailed } = require('./notification');
 
-// notificationFailed(
-//   'https://github.com/RootLinkFE/AutoBuild-React-Native/actions',
-//   'Android打包失败'
-// );
+const BUILD_URL =
+  process.argv[2] ||
+  'https://github.com/RootLinkFE/AutoBuild-React-Native/actions';
+
+notificationFailed(BUILD_URL, 'Android打包失败');

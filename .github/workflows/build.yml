@@ -66,4 +66,4 @@ jobs:
         if: ${{ failure() }}
         run: |
           npm i request
-          node ./send-error.js
+          node ./send-error.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
