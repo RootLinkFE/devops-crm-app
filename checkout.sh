@@ -4,7 +4,7 @@
 set -e
 
 branchName=${1}
-commitmsg="${commitmsg}"
+commitmsg="${2}"
 
 function log() {
   echo "$(date)>>>>$@"
