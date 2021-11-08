@@ -64,4 +64,4 @@ jobs:
       - name: on failure
         if: ${{ failure() }}
         run: |
-          node ./scripts/send-error.js
+          node ./send-error.js
