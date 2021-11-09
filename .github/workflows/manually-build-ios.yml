@@ -73,8 +73,8 @@ jobs:
         run: curl -F file=@/Users/***/Desktop/${{ steps.date.outputs.date }}/${{ github.run_number }}/me.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload 
 
       - name: Send finally notify
-         run: |
-          node ./scripts/send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>Github Job RunId: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \n>蒲公英地址:[https://www.pgyer.com/****](https://www.pgyer.com/****)"
+        run: |
+            node ./scripts/send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>Github Job RunId: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \n>蒲公英地址:[https://www.pgyer.com/****](https://www.pgyer.com/****)"
       - name: On Failure
         if: ${{ failure() }}
         run: |
