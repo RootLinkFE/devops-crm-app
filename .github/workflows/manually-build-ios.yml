@@ -54,7 +54,7 @@ jobs:
           cd ..
       - name: Start Build Apk Message
         run: |
-          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"  "IOS"
 
       - uses: yukiarrr/ios-build-action@v1.4.0
         with:
@@ -71,7 +71,7 @@ jobs:
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
           npm i request
-          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "ios"
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
       - name: push to fir
         id: PushToFir
         run: curl -F file=@/${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload
@@ -82,4 +82,4 @@ jobs:
       - name: On Failure
         if: ${{ failure() }}
         run: |
-          node ./send-error.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"  "ios"
+          node ./send-error.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"  "IOS"

@@ -11,5 +11,5 @@ if (uploadCloud === 'true') {
 if (uploadCloud === 'true' && platform.toLowerCase() === 'ios') {
   text = '\n>正在同步到蒲公英平台……';
 }
-const context = `${platform}构建成功\n>已上传Github Artifact，可前往下载(需登陆): [${BUILD_URL}](${BUILD_URL})${text}`;
+const context = `${platform}构建成功🎉 \n>已上传Github Artifact，可前往下载(需登陆): [${BUILD_URL}](${BUILD_URL})${text}`;
 notificationSuccess(context, () => {});
