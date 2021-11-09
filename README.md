@@ -30,4 +30,5 @@ git message 关键词区分说明：
 
 ## 其他
 
-Github Action 学习文档：https://docs.github.com/en/actions/learn-github-actions
+- Github Action 官方文档：https://docs.github.com/en/actions/learn-github-actions
+- IOS 接入 GitHub Action：https://www.jianshu.com/p/d5ebf33145b9

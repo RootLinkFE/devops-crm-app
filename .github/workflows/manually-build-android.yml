@@ -3,7 +3,7 @@ on:
   workflow_dispatch:
     inputs:
       buildBranch:
-        description: '*输入构建分支(dev/test/master/prod)'
+        description: '输入构建分支(dev/test/master/prod)'
         required: true
         default: 'dev'
       uploadArtifact:
@@ -48,7 +48,7 @@ jobs:
           npm install
       - name: Start Build Apk Message
         run: |
-          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
       - name: Build Android Release
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease

@@ -1,0 +1,81 @@
+name: IOS手动构建
+on:
+  push:
+    branches: [ master* ]
+  pull_request:
+    branches: [ master* ]
+   
+  workflow_dispatch:
+    inputs:
+      buildBranch:
+        description: '输入构建分支(dev/test/master/prod)'
+        required: true
+        default: 'dev'
+      uploadArtifact:
+        description: '是否将生成的ipa上传到Github Artifact (true/false)'
+        required: false
+        default: 'true'
+      uploadCloud:
+        description: '是否将生成的ipa上传到蒲公英。(true/false)'
+        required: false
+        default: 'true'
+jobs:
+  build:
+    runs-on: self-hosted
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Get commit message
+        run: |
+          GIT_MESSAGE="$(git log --format=%B -n 1)"
+          date_str=$(date "+%Y-%m-%d %H:%M:%S")
+          seconds=$(date -d "$date_str" +%s)
+          seconds_new=$(expr $seconds + 28800) 
+          echo "COMMIT_MESSAGE=$GIT_MESSAGE" >> $GITHUB_ENV
+          echo "BUILD_TIME=$(date -d @$seconds_new "+%Y-%m-%d_%H_%M_%S")" >> $GITHUB_ENV
+      - name: Show commit message
+        run: |
+          echo "$COMMIT_MESSAGE"
+          echo "$BUILD_TIME"
+          echo "${{ github.event.inputs.buildBranch }}"
+      - name: Checkout code
+        run: |
+          bash ./checkout2.sh "${{ github.event.inputs.buildBranch }}"
+      - name: Install npm dependencies
+        run: |
+          npm install
+      - name: pod
+        run: |
+          cd android && pod install
+          cd ..
+      - name: Start Build Apk Message
+        run: |
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
+    
+      - uses: yukiarrr/ios-build-action@v1.4.0
+        with:
+            project-path: ./ios/g_service.xcodeproj
+            workspace-path: ./ios/g_service.xcworkspace # optional
+            p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
+            p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
+            mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+            code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+            team-id: ${{ secrets.TEAM_ID }}
+            export-method: 'development'
+            output-path: /Users/***/Desktop/${{ steps.date.outputs.date }}/${{ github.run_number }}/me.ipa
+      - name: Upload Artifact Success
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        run: |
+          npm i request
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "ios"
+      - name: push to fir
+        id: PushToFir
+        run: curl -F file=@/Users/***/Desktop/${{ steps.date.outputs.date }}/${{ github.run_number }}/me.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload 
+
+      - name: Send finally notify
+         run: |
+          node ./scripts/send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>Github Job RunId: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \n>蒲公英地址:[https://www.pgyer.com/****](https://www.pgyer.com/****)"
+      - name: On Failure
+        if: ${{ failure() }}
+        run: |
+          node ./send-error.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"  "ios"
