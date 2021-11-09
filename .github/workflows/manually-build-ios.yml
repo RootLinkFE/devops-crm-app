@@ -63,10 +63,10 @@ jobs:
           p12-base64: ${{ secrets.P12_BASE64 }}
           # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
           mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
-          code-signing-identity: 'iPhone Developer'
+          code-signing-identity: 'IOS Developer'
           team-id: ${{ secrets.TEAM_ID }}
-          export-method: 'ad-hoc'
-          # export-method: 'development'
+          # export-method: 'ad-hoc'
+          export-method: 'development'
           configuration: 'Release'
           output-path: /${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa
       - name: Upload Artifact Success
