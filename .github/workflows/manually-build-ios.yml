@@ -65,12 +65,18 @@ jobs:
           # p12-base64: ${{ secrets.P12_BASE64 }}
           # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
           # mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
-          code-signing-identity: ${{ CODE_SIGNING_IDENTITY }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
           # export-method: 'ad-hoc'
           export-method: 'development'
           configuration: 'Release'
           output-path: /Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa
+      - name: Upload Artifact
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: tieniuniu.ipa
+          path: /Users/runner/work/AutoBuild-React-Native/outputs/
       - name: Upload Artifact Success
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
