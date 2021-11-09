@@ -50,7 +50,7 @@ jobs:
           npm install
       - name: pod
         run: |
-          cd android && pod install
+          cd ios && pod install
           cd ..
       - name: Start Build Apk Message
         run: |
@@ -66,7 +66,7 @@ jobs:
           code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
           export-method: 'development'
-          output-path: /Users/***/Desktop/${{ steps.date.outputs.date }}/${{ github.run_number }}/me.ipa
+          output-path: /${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa
       - name: Upload Artifact Success
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
@@ -74,7 +74,7 @@ jobs:
           node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "ios"
       - name: push to fir
         id: PushToFir
-        run: curl -F file=@/Users/***/Desktop/${{ steps.date.outputs.date }}/${{ github.run_number }}/me.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload
+        run: curl -F file=@/${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload
 
       - name: Send finally notify
         run: |
