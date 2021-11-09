@@ -7,9 +7,13 @@ on:
         required: true
         default: 'dev'
       uploadArtifact:
-        description: '是否将生成的apk上传到Github Artifact'
+        description: '是否将生成的apk上传到Github Artifact (true/false)'
         required: false
         default: 'true'
+      uploadCloud:
+        description: '是否将生成的apk上传公司文件参考，网速慢可能会超时。(true/false)'
+        required: false
+        default: 'false'
 
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
@@ -58,8 +62,9 @@ jobs:
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
           npm i request
-          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
       - name: Upload Apk & Send message to WeCom Group Chat
+        if: ${{ github.event.inputs.uploadCloud == 'true' }}
         run: |
           node ./scripts/send-file.js
       - name: On Failure
