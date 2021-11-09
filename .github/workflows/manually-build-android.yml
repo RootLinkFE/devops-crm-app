@@ -11,7 +11,7 @@ on:
         required: false
         default: 'true'
       uploadCloud:
-        description: '是否将生成的apk上传公司文件参考，网速慢可能会超时。(true/false)'
+        description: '是否将生成的apk上传公司文件参考，网速慢可能会超时或很久，默认false，节省时间建议去Github Artifact自行下载。(true/false)'
         required: false
         default: 'false'
 
