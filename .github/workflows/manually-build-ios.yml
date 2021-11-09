@@ -29,11 +29,7 @@ jobs:
       - name: Get commit message
         run: |
           GIT_MESSAGE="$(git log --format=%B -n 1)"
-          date_str=$(date "+%Y-%m-%d %H:%M:%S")
-          seconds=$(date -d "$date_str" +%s)
-          seconds_new=$(expr $seconds + 28800) 
           echo "COMMIT_MESSAGE=$GIT_MESSAGE" >> $GITHUB_ENV
-          echo "BUILD_TIME=$(date -d @$seconds_new "+%Y-%m-%d_%H_%M_%S")" >> $GITHUB_ENV
       - name: Show commit message
         run: |
           echo "$COMMIT_MESSAGE"
