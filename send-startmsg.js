@@ -17,5 +17,5 @@ if (uploadCloud === 'true' && platform.toLowerCase() === 'ios') {
   text = '\n>选择**不同步**到蒲公英平台';
 }
 
-const context = `>${platform}正在构建: [${BUILD_URL}](${BUILD_URL})${text}`;
+const context = `>${platform}正在构建🚀: [${BUILD_URL}](${BUILD_URL})${text}`;
 notificationSuccess(context, () => {});
