@@ -65,7 +65,9 @@ jobs:
           mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
           code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
-          export-method: 'development'
+          export-method: 'ad-hoc'
+          # export-method: 'development'
+          configuration: 'Release'
           output-path: /${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa
       - name: Upload Artifact Success
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
