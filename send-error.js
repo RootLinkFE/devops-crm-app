@@ -5,5 +5,5 @@ const BUILD_URL =
   'https://github.com/RootLinkFE/AutoBuild-React-Native/actions';
 const platform = process.argv[3] || 'Android';
 
-const context = `>${platform}构建失败❌，详情见: [${BUILD_URL}](${BUILD_URL})`;
+const context = `>${platform}构建失败❌，详情见: [Job Link](${BUILD_URL})`;
 notificationSuccess(context, () => {});
