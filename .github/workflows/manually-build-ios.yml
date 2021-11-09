@@ -65,12 +65,12 @@ jobs:
           # p12-base64: ${{ secrets.P12_BASE64 }}
           # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
           # mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
-          code-signing-identity: 'iPhone Developer: houbin lao (Y7797TFTTH)'
+          code-signing-identity: ${{ CODE_SIGNING_IDENTITY }}
           team-id: ${{ secrets.TEAM_ID }}
           # export-method: 'ad-hoc'
           export-method: 'development'
           configuration: 'Release'
-          output-path: /outputs/tieniuniu.ipa
+          output-path: /Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa
       - name: Upload Artifact Success
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
@@ -78,7 +78,7 @@ jobs:
           node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
       - name: push to fir
         id: PushToFir
-        run: curl -F file=/outputs/tieniuniu.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload
+        run: curl -F file=/Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
 
       - name: Send finally notify
         run: |
