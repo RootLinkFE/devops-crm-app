@@ -50,7 +50,8 @@ jobs:
           npm install
       - name: pod
         run: |
-          cd ios && pod install
+          cd ios 
+          pod update
           cd ..
       - name: Start Build Apk Message
         run: |
@@ -59,7 +60,7 @@ jobs:
       - uses: yukiarrr/ios-build-action@v1.4.0
         with:
           project-path: ios/g_service.xcodeproj
-          # workspace-path: ios/g_service.xcworkspace
+          workspace-path: ios/g_service.xcworkspace
           p12-path: ios/Certificates.p12
           mobileprovision-path: ios/tieniuniu.mobileprovision
           # p12-base64: ${{ secrets.P12_BASE64 }}
@@ -70,7 +71,7 @@ jobs:
           # export-method: 'ad-hoc'
           export-method: 'development'
           configuration: 'Release'
-          output-path: /${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa
+          output-path: /outputs/tieniuniu.ipa
       - name: Upload Artifact Success
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
@@ -78,7 +79,7 @@ jobs:
           node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
       - name: push to fir
         id: PushToFir
-        run: curl -F file=@/${{ steps.date.outputs.date }}/${{ github.run_number }}/g-service.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload
+        run: curl -F file=/outputs/tieniuniu.ipa -F '_api_key=255538ec7cc065061e64e5f01f97278e' https://www.pgyer.com/apiv2/app/upload
 
       - name: Send finally notify
         run: |
