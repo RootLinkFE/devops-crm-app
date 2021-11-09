@@ -59,9 +59,9 @@ jobs:
       - uses: yukiarrr/ios-build-action@v1.4.0
         with:
           project-path: ./ios/g_service.xcodeproj
-          workspace-path: ./ios/g_service.xcworkspace # optional
-          p12-key-base64: ${{ secrets.P12_KEY_BASE64 }}
-          p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
+          workspace-path: ./ios/g_service.xcworkspace
+          p12-base64: ${{ secrets.P12_BASE64 }}
+          # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
           mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
           code-signing-identity: 'iPhone Developer'
           team-id: ${{ secrets.TEAM_ID }}
