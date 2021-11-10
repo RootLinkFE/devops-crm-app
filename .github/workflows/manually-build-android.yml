@@ -1,4 +1,4 @@
-name: Android手动构建
+name: Android构建
 on:
   workflow_dispatch:
     inputs:

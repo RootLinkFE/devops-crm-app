@@ -1,4 +1,4 @@
-name: IOS手动构建
+name: IOS构建
 on:
   # push:
   #   branches: [master*]
