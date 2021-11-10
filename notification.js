@@ -1,4 +1,5 @@
 const request = require('request');
+const { mentionList } = require('./notification-cfg');
 const webhookKey = process.env.WECOM_WEBHOOK_KEY;
 
 function requestWebhook(body, cb) {
@@ -29,6 +30,7 @@ function notificationSuccess(content, cb) {
     msgtype: 'markdown',
     markdown: {
       content: content,
+      mentioned_mobile_list: mentionList,
     },
   };
   if (content.msgtype === 'text') {
