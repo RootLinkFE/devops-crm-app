@@ -50,6 +50,7 @@ jobs:
           bash ./checkout2.sh "${{ github.event.inputs.buildBranch }}"
       - name: Install npm dependencies
         run: |
+          npm -v 
           npm install
       - name: pod
         run: |
