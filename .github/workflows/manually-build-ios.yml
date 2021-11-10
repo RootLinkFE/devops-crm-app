@@ -98,7 +98,7 @@ jobs:
           node ./send-msg.js "同步到蒲公英平台失败。请检查错误重新执行或前往Action直接下载ipa文件 \n>[Job RunId](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
       - name: Send finally notify
         run: |
-          node ./send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>[Job RunId](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) \n>蒲公英地址:[https://www.pgyer.com/tieniu](https://www.pgyer.com/tieniu)"
+          node ./send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>[Job Link](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) \n>蒲公英地址:[https://www.pgyer.com/dev-tie-ipa](https://www.pgyer.com/dev-tie-ipa)"
       - name: On Failure
         if: ${{ failure() }}
         run: |

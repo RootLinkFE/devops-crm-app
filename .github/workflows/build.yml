@@ -2,7 +2,7 @@ name: auto-apk
 on:
   push:
     branches:
-      - master
+      - dev
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
   WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
