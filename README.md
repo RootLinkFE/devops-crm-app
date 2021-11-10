@@ -1,6 +1,8 @@
 # AutoBuild-React-Native
 
 ![build workflow](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/build.yml/badge.svg)
+![Android](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-android.yml/badge.svg)
+![IOS](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-ios.yml/badge.svg)
 
 利用 Action 构建私库 gitlab rn app 代码
 
