@@ -87,7 +87,7 @@ jobs:
         run: |
           curl -F 'file=@/Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa' -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
         continue-on-error: true
-      - name: Send finally notify
+      - name: Send fir error notify
         id: firErrorMessage
         if: steps.PushToFir.outcome != 'success'
         run: |
