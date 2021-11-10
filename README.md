@@ -1,8 +1,8 @@
 # AutoBuild-React-Native
 
-![build workflow](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/build.yml/badge.svg)
-![Android](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-android.yml/badge.svg)
-![IOS](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-ios.yml/badge.svg)
+[![build workflow](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/build.yml/badge.svg)](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/build.yml)
+[![Android](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-android.yml/badge.svg)](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-android.yml)
+[![IOS](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-ios.yml/badge.svg)](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-ios.yml)
 
 利用 Action 构建私库 gitlab rn app 代码
 
@@ -34,6 +34,8 @@ git message 关键词区分说明：
 手动触发 Android 构建流程步骤（IOS 同理）：
 
 ![](./screenshot.png)
+
+- Android 手动构建入口
 
 ## 其他
 
