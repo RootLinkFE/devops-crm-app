@@ -1,5 +1,4 @@
 const request = require('request');
-const { mentionList } = require('./notification-cfg');
 const webhookKey = process.env.WECOM_WEBHOOK_KEY;
 
 function requestWebhook(body, cb) {
@@ -25,12 +24,12 @@ function requestWebhook(body, cb) {
   );
 }
 
-function notificationSuccess(content, cb) {
+function notificationSuccess(content, cb, mentionList = []) {
   let body = {
     msgtype: 'markdown',
     markdown: {
       content: content,
-      mentioned_mobile_list: mentionList,
+      mentioned_list: mentionList,
     },
   };
   if (content.msgtype === 'text') {
@@ -38,7 +37,7 @@ function notificationSuccess(content, cb) {
       msgtype: 'text',
       text: {
         content: content.content,
-        // mentioned_mobile_list: ['@all'],
+        // mentioned_list: ['@all'],
       },
     };
   }
@@ -55,11 +54,12 @@ function notificationSuccess(content, cb) {
   requestWebhook(body, cb);
 }
 
-function notificationFailed(message, subject) {
+function notificationFailed(message, subject, mentionList = []) {
   const body = {
     msgtype: 'markdown',
     markdown: {
       content: `<font color="comment">${subject}</font>\n>**失败原因**：<font color="info">${message}</font>`,
+      mentioned_list: mentionList,
     },
   };
   requestWebhook(body);
