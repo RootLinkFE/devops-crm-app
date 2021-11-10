@@ -11,9 +11,9 @@ on:
         required: false
         default: 'true'
       uploadCloud:
-        description: '是否将生成的apk上传公司文件参考，网速慢可能会超时或很久，默认false，节省时间建议去Github Artifact自行下载。(true/false)'
+        description: '是否将生成的apk上传到蒲公英。(true/false)'
         required: false
-        default: 'false'
+        default: 'true'
 
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
@@ -63,10 +63,19 @@ jobs:
         run: |
           npm i request
           node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
-      - name: Upload Apk & Send message to WeCom Group Chat
-        if: ${{ github.event.inputs.uploadCloud == 'true' }}
+      - name: Push to Fir
+        id: PushToFir
         run: |
-          node ./scripts/send-file.js
+          curl -F 'file=@android/app/build/outputs/apk/release/app-release.apk' -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
+        continue-on-error: true
+      - name: Send fir error notify
+        id: firErrorMessage
+        if: steps.PushToFir.outcome != 'success'
+        run: |
+          node ./send-msg.js "Android 附件同步到蒲公英平台失败。请检查错误重新执行或前往Action直接下载apk文件 \n>[Job RunId](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+      - name: Send finally notify
+        run: |
+          node ./send-msg.js "Android 构建成功，并同步到蒲公英平台。\n>[Job RunId](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) \n>蒲公英地址:[https://www.pgyer.com/tie-apk](https://www.pgyer.com/tie-apk)"
       - name: On Failure
         if: ${{ failure() }}
         run: |
