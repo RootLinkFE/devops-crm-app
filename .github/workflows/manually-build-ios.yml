@@ -84,14 +84,19 @@ jobs:
           node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
       - name: push to fir
         id: PushToFir
-        run: curl -F file=/Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
-
+        run: |
+          curl -F 'file=@/Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa' -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
+        continue-on-error: true
+      - name: Send finally notify
+        id: firErrorMessage
+        if: steps.PushToFir.outcome != 'success'
+        run: |
+          node ./send-msg.js "同步到蒲公英平台失败。请检查错误重新执行或前往Action直接下载ipa文件\n>Github Job RunId: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} "
       - name: Send finally notify
         run: |
-          npm i request
-          node ./scripts/send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>Github Job RunId: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \n>蒲公英地址:[https://www.pgyer.com/tieniu](https://www.pgyer.com/tieniu)"
+          node ./send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>Github Job RunId: ${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }} \n>蒲公英地址:[https://www.pgyer.com/tieniu](https://www.pgyer.com/tieniu)"
       - name: On Failure
-        if: ${{ failure() }}
+        if: steps.firErrorMessage.outcome != 'success'
         run: |
           npm i request
           node ./send-error.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"  "IOS"
