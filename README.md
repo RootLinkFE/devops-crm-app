@@ -4,6 +4,9 @@
 
 利用 Action 构建私库 gitlab rn app 代码
 
+- 支持 Android
+- 支持 IOS
+
 ## 使用说明
 
 利用 git message 提交信息区分构建不同环境分支代码
