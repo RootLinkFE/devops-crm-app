@@ -29,7 +29,10 @@ env:
 jobs:
   build:
     runs-on: macos-10.15
-    timeout-minutes: 45
+    timeout-minutes: 60
+    strategy:
+    matrix:
+      node-version: [14.18.x]
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
