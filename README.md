@@ -9,6 +9,8 @@
 - 支持 Android
 - 支持 IOS
 
+实现总结文章：[GitHub Actions 实现 RN App 自动化构建并推送到蒲公英](https://github.com/giscafer/blog/issues/53)
+
 ## 使用说明
 
 <!-- 利用 git message 提交信息区分构建不同环境分支代码
