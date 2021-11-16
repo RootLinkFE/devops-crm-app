@@ -23,8 +23,6 @@ on:
 env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
   WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
-  UPLOAD_TOKEN_URL: ${{ secrets.UPLOAD_TOKEN_URL }}
-  UPLOAD_URL: ${{ secrets.UPLOAD_URL }}
 
 jobs:
   build:
