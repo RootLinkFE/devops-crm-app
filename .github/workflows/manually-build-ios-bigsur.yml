@@ -1,0 +1,104 @@
+name: IOS Big Sur
+on:
+  # push:
+  #   branches: [master*]
+  # pull_request:
+  #   branches: [master*]
+
+  workflow_dispatch:
+    inputs:
+      buildBranch:
+        description: '输入构建分支(dev/test/master/prod)'
+        required: true
+        default: 'dev'
+      uploadArtifact:
+        description: '是否将生成的ipa上传到Github Artifact (true/false)'
+        required: false
+        default: 'true'
+      uploadCloud:
+        description: '是否将生成的ipa上传到蒲公英。(true/false)'
+        required: false
+        default: 'true'
+
+env:
+  GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
+  WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
+
+jobs:
+  build:
+    runs-on: macos-11
+    timeout-minutes: 60
+    strategy:
+      matrix:
+        node-version: [14.18.x]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+      - name: Get commit message
+        run: |
+          GIT_MESSAGE="$(git log --format=%B -n 1)"
+          echo "COMMIT_MESSAGE=$GIT_MESSAGE" >> $GITHUB_ENV
+      - name: Show commit message
+        run: |
+          echo "$COMMIT_MESSAGE"
+          echo "$BUILD_TIME"
+          echo "${{ github.event.inputs.buildBranch }}"
+      - name: Checkout code
+        run: |
+          bash ./checkout2.sh "${{ github.event.inputs.buildBranch }}"
+      - name: Install npm dependencies
+        run: |
+          npm -v 
+          npm install
+      - name: pod
+        run: |
+          cd ios && pod install --repo-update
+          cd ..
+      - name: Start Build Apk Message
+        run: |
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"  "IOS"
+
+      - uses: yukiarrr/ios-build-action@v1.4.0
+        with:
+          project-path: ios/g_service.xcodeproj
+          workspace-path: ios/g_service.xcworkspace
+          p12-path: ios/Certificates.p12
+          mobileprovision-path: ios/tie.mobileprovision
+          # p12-base64: ${{ secrets.P12_BASE64 }}
+          # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
+          # mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
+          code-signing-identity: ${{ secrets.CODE_SIGNING_IDENTITY }}
+          team-id: ${{ secrets.TEAM_ID }}
+          # export-method: 'ad-hoc'
+          export-method: 'development'
+          configuration: 'Release'
+          output-path: /Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa
+      - name: Upload Artifact
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: tieniuniu.ipa
+          path: /Users/runner/work/AutoBuild-React-Native/outputs/
+      - name: Upload Artifact Success
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        run: |
+          npm i request
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
+      - name: push to fir
+        id: PushToFir
+        run: |
+          curl -F 'file=@/Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa' -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
+        continue-on-error: true
+      - name: Send fir error notify
+        id: firErrorMessage
+        if: steps.PushToFir.outcome != 'success'
+        run: |
+          node ./send-msg.js "同步到蒲公英平台失败。请检查错误重新执行或前往Action直接下载ipa文件 \n>[Job RunId](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }})"
+      - name: Send finally notify
+        run: |
+          node ./send-msg.js "IOS构建成功，并同步到蒲公英平台。\n>[Job Link](${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}) \n>蒲公英地址:[https://www.pgyer.com/dev-tie-ipa](https://www.pgyer.com/dev-tie-ipa)"
+      - name: On Failure
+        if: ${{ failure() }}
+        run: |
+          npm i request
+          node ./send-error.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}"  "IOS"
