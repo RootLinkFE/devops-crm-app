@@ -63,7 +63,7 @@ jobs:
           project-path: ios/g_service.xcodeproj
           workspace-path: ios/g_service.xcworkspace
           p12-path: ios/Certificates.p12
-          mobileprovision-path: ios/tie.mobileprovision
+          mobileprovision-path: ios/tieniu.mobileprovision
           # p12-base64: ${{ secrets.P12_BASE64 }}
           # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
           # mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
