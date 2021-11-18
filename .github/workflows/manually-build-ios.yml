@@ -74,17 +74,17 @@ jobs:
           export-method: 'development'
           configuration: 'Release'
           output-path: /Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa
-      - name: Upload Artifact
-        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-        uses: actions/upload-artifact@v1
-        with:
-          name: tieniuniu.ipa
-          path: /Users/runner/work/AutoBuild-React-Native/outputs/
-      - name: Upload Artifact Success
-        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-        run: |
-          npm i request
-          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
+      # - name: Upload Artifact
+      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: tieniuniu.ipa
+      #     path: /Users/runner/work/AutoBuild-React-Native/outputs/
+      # - name: Upload Artifact Success
+      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+      #   run: |
+      #     npm i request
+      #     node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
       - name: push to fir
         id: PushToFir
         run: |

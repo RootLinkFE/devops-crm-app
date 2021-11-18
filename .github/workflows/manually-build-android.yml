@@ -50,17 +50,17 @@ jobs:
       - name: Build Android Release
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
-      - name: Upload Artifact
-        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-        uses: actions/upload-artifact@v1
-        with:
-          name: app-release.apk
-          path: android/app/build/outputs/apk/release/
-      - name: Upload Artifact Success
-        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-        run: |
-          npm i request
-          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
+      # - name: Upload Artifact
+      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+      #   uses: actions/upload-artifact@v1
+      #   with:
+      #     name: app-release.apk
+      #     path: android/app/build/outputs/apk/release/
+      # - name: Upload Artifact Success
+      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+      #   run: |
+      #     npm i request
+      #     node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
       - name: Push to Fir
         id: PushToFir
         run: |
