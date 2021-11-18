@@ -53,6 +53,7 @@ jobs:
           npm install
       - name: pod
         run: |
+          mv ios_cert/* ./ios
           cd ios && pod install --repo-update
           cd ..
       - name: Start Build Apk Message

@@ -33,11 +33,11 @@ git message 关键词区分说明：
 
 ### 手动构建说明
 
+- Android 手动构建入口
+
 手动触发 Android 构建流程步骤（IOS 同理）：
 
 ![](./screenshot.png)
-
-- Android 手动构建入口
 
 ## 其他
 
