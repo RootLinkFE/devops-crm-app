@@ -16,18 +16,17 @@ function log() {
 
 
 # 克隆分支代码
-log "${commitmsg}"
 
-if [[ $commitmsg == $testBranch ]];then
+if [[ $branchName == $testBranch ]];then
     echo "包含test"
     git clone -b test $repositoryUrl
-elif [[ $commitmsg == $masterBranch ]];then
+elif [[ $branchName == $masterBranch ]];then
     echo "包含master"
     git clone $repositoryUrl
-elif [[ $commitmsg == $prodBranch ]];then
-    echo "包含[prod]"
+elif [[ $branchName == $prodBranch ]];then
+    echo "包含prod"
     git clone -b prod $repositoryUrl
-elif [[ $commitmsg == $devBranch ]];then
+elif [[ $branchName == $devBranch ]];then
     echo "包含dev"
     git clone -b dev $repositoryUrl
 else
@@ -35,13 +34,12 @@ else
     git clone -b dev $repositoryUrl
 fi
 
-cd g-crm-app 
+# cd g-crm-app 
+# log "$(git branch)"
+# # 拉取最新代码
+# git pull
+# cd ..  
 
-log "$(git branch)"
-# 拉取最新代码
-git pull
-
-cd ..  
 # 将代码放到github runner 执行目录下
 cd g-crm-app && mv * ../ 
 

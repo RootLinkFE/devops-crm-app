@@ -7,12 +7,12 @@ on:
         required: true
         default: 'dev'
       uploadArtifact:
-        description: '是否将生成的apk上传到Github Artifact (true/false)'
+        description: '是否将生成的apk上传到 Github Artifact (true/false)'
         required: false
-        default: 'true'
+        default: 'false'
       uploadCloud:
         description: '是否将生成的apk上传到蒲公英。(true/false)'
-        required: false
+        required: true
         default: 'true'
 
 env:
@@ -40,7 +40,7 @@ jobs:
           echo "${{ github.event.inputs.buildBranch }}"
       - name: Checkout code
         run: |
-          bash ./checkout2.sh "${{ github.event.inputs.buildBranch }}"
+          bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
       - name: Install npm dependencies
         run: |
           npm install
@@ -50,17 +50,17 @@ jobs:
       - name: Build Android Release
         run: |
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
-      # - name: Upload Artifact
-      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: app-release.apk
-      #     path: android/app/build/outputs/apk/release/
-      # - name: Upload Artifact Success
-      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-      #   run: |
-      #     npm i request
-      #     node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
+      - name: Upload Artifact
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: app-release.apk
+          path: android/app/build/outputs/apk/release/
+      - name: Upload Artifact Success
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        run: |
+          npm i request
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"
       - name: Push to Fir
         id: PushToFir
         run: |

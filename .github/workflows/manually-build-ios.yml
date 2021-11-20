@@ -12,12 +12,12 @@ on:
         required: true
         default: 'dev'
       uploadArtifact:
-        description: '是否将生成的ipa上传到Github Artifact (true/false)'
+        description: '是否将生成的ipa上传到 Github Artifact (true/false)'
         required: false
-        default: 'true'
+        default: 'false'
       uploadCloud:
         description: '是否将生成的ipa上传到蒲公英。(true/false)'
-        required: false
+        required: true
         default: 'true'
 
 env:
@@ -46,14 +46,15 @@ jobs:
           echo "${{ github.event.inputs.buildBranch }}"
       - name: Checkout code
         run: |
-          bash ./checkout2.sh "${{ github.event.inputs.buildBranch }}"
+          bash ./checkout.sh "${{ github.event.inputs.buildBranch }}"
       - name: Install npm dependencies
         run: |
           npm -v 
           npm install
       - name: pod
         run: |
-          mv ios_cert/* ./ios
+          ls -l
+          cp -Rf ios_cert/* ./ios
           cd ios && pod install --repo-update
           cd ..
       - name: Start Build Apk Message
@@ -75,17 +76,17 @@ jobs:
           export-method: 'development'
           configuration: 'Release'
           output-path: /Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa
-      # - name: Upload Artifact
-      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-      #   uses: actions/upload-artifact@v1
-      #   with:
-      #     name: tieniuniu.ipa
-      #     path: /Users/runner/work/AutoBuild-React-Native/outputs/
-      # - name: Upload Artifact Success
-      #   if: ${{ github.event.inputs.uploadArtifact == 'true' }}
-      #   run: |
-      #     npm i request
-      #     node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
+      - name: Upload Artifact
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        uses: actions/upload-artifact@v1
+        with:
+          name: tieniuniu.ipa
+          path: /Users/runner/work/AutoBuild-React-Native/outputs/
+      - name: Upload Artifact Success
+        if: ${{ github.event.inputs.uploadArtifact == 'true' }}
+        run: |
+          npm i request
+          node ./send-success.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS"
       - name: push to fir
         id: PushToFir
         run: |

@@ -1,3 +1,3 @@
 module.exports = {
-  mentionList: ['戴熊坤', '孔贤桢'],
+  mentionList: ['xiongkun.dai', 'xianzhen.kong'],
 };
