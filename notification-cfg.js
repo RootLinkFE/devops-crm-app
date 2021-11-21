@@ -1,3 +1,5 @@
+const list = process.env.MENTION_MOBILE_LIST || '';
+
 module.exports = {
-  mentionList: ['xiongkun.dai', 'xianzhen.kong'],
+  mentionMobileList: list.split(','),
 };

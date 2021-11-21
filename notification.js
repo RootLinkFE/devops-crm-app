@@ -29,7 +29,7 @@ function notificationSuccess(content, cb, mentionList = []) {
     msgtype: 'markdown',
     markdown: {
       content: content,
-      mentioned_list: mentionList,
+      mentioned_mobile_list: mentionList,
     },
   };
   if (content.msgtype === 'text') {
@@ -37,7 +37,7 @@ function notificationSuccess(content, cb, mentionList = []) {
       msgtype: 'text',
       text: {
         content: content.content,
-        // mentioned_list: ['@all'],
+        // mentioned_mobile_list: ['@all'],
       },
     };
   }
@@ -59,7 +59,7 @@ function notificationFailed(message, subject, mentionList = []) {
     msgtype: 'markdown',
     markdown: {
       content: `<font color="comment">${subject}</font>\n>**失败原因**：<font color="info">${message}</font>`,
-      mentioned_list: mentionList,
+      mentioned_mobile_list: mentionList,
     },
   };
   requestWebhook(body);
