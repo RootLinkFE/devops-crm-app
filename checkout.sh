@@ -47,5 +47,5 @@ pwd
 
 ls -l
 
-# 此处应该有切换环境服务地址的脚本执行
-# node ./scripts/prebuild.js
+# 切换环境服务地址
+node ./scripts/env.js $branchName
