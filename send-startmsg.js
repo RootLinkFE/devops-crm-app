@@ -5,6 +5,8 @@ const BUILD_URL =
 
 const uploadCloud = process.argv[3];
 const platform = process.argv[4] || 'Android';
+const branchName = process.argv[5];
+
 let text = '';
 
 if (uploadCloud === 'true') {
@@ -13,5 +15,5 @@ if (uploadCloud === 'true') {
   text = '\n>选择<font color="warning">不同步</font>到蒲公英平台';
 }
 
-const context = `>${platform}正在构建🚀，详情见：[Job Link](${BUILD_URL})${text}`;
+const context = `>${platform}正在构建🚀，详情见：[Job Link](${BUILD_URL})${text}；\n>分支：<font color="info">${branchName}</font>`;
 notificationSuccess(context, () => {});
