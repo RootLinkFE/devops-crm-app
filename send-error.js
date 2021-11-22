@@ -8,5 +8,5 @@ const platform = process.argv[3] || 'Android';
 
 const branchName = process.argv[4];
 
-const context = `>${platform}构建失败❌，详情见: [Job Link](${BUILD_URL})；\n>分支：<font color="info">${branchName}</font>`;
+const context = `>${platform}构建失败❌，详情见: [Job Link](${BUILD_URL})；\n>分支：<font color="warning">${branchName}</font>`;
 notificationSuccess(context, () => {});

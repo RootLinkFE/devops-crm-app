@@ -47,7 +47,7 @@ jobs:
           npm install
       - name: Start Build Apk Message
         run: |
-          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "${{ github.event.inputs.buildBranch }}"
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"  "Android" "${{ github.event.inputs.buildBranch }}"
       - name: Build Android Release
         run: |
           node ./scripts/env.js "${{ github.event.inputs.buildBranch }}"

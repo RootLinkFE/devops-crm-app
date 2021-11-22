@@ -61,7 +61,7 @@ jobs:
           cd ..
       - name: Start Build Apk Message
         run: |
-          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}"  "IOS" "${{ github.event.inputs.buildBranch }}"
+          node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "IOS" "${{ github.event.inputs.buildBranch }}"
 
       - uses: yukiarrr/ios-build-action@v1.4.0
         with:

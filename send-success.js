@@ -11,5 +11,5 @@ let text = '';
 if (uploadCloud === 'true') {
   text = '\n>正在同步到蒲公英平台……';
 }
-const context = `${platform}构建成功🎉 \n>分支：<font color="info">${branchName}</font>\n>已上传 Github Artifact，[点此下载(需登陆)](${BUILD_URL})${text}`;
+const context = `${platform}构建成功🎉 \n>分支：<font color="warning">${branchName}</font>\n>已上传 Github Artifact，[点此下载(需登陆)](${BUILD_URL})${text}`;
 notificationSuccess(context, null, mentionList);

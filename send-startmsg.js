@@ -15,5 +15,5 @@ if (uploadCloud === 'true') {
   text = '\n>选择<font color="warning">不同步</font>到蒲公英平台';
 }
 
-const context = `>${platform}正在构建🚀，详情见：[Job Link](${BUILD_URL})${text}；\n>分支：<font color="info">${branchName}</font>`;
+const context = `>${platform}正在构建🚀，详情见：[Job Link](${BUILD_URL})${text}；\n>分支：<font color="warning">${branchName}</font>`;
 notificationSuccess(context, () => {});
