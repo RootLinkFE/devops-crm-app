@@ -55,6 +55,7 @@ jobs:
       - name: pod
         run: |
           ls -l
+          node ./scripts/env.js "${{ github.event.inputs.buildBranch }}"
           cp -Rf ios_cert/* ./ios
           cd ios && pod install --repo-update
           cd ..

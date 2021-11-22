@@ -46,6 +46,3 @@ cd g-crm-app && mv * ../
 pwd
 
 ls -l
-
-# 切换环境服务地址
-node ./scripts/env.js $branchName

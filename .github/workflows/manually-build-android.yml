@@ -50,6 +50,7 @@ jobs:
           node ./send-startmsg.js "${{ github.server_url }}/${{ github.repository }}/actions/runs/${{ github.run_id }}" "${{ github.event.inputs.uploadCloud }}" "${{ github.event.inputs.buildBranch }}"
       - name: Build Android Release
         run: |
+          node ./scripts/env.js "${{ github.event.inputs.buildBranch }}"
           cd android && chmod +x ./gradlew && ./gradlew assembleRelease
       - name: Upload Artifact
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
