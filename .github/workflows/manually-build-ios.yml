@@ -10,7 +10,7 @@ on:
       buildBranch:
         description: '输入构建分支(dev/test/master/prod)'
         required: true
-        default: 'dev'
+        default: 'test'
       uploadArtifact:
         description: '是否将生成的ipa上传到 Github Artifact (true/false)'
         required: false
