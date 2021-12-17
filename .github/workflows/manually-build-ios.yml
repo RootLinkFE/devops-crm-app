@@ -24,6 +24,7 @@ env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
   WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
   MENTION_MOBILE_LIST: ${{ secrets.MENTION_MOBILE_LIST }}
+  PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
 
 jobs:
   build:
@@ -67,8 +68,8 @@ jobs:
         with:
           project-path: ios/g_service.xcodeproj
           workspace-path: ios/g_service.xcworkspace
-          p12-path: ios/Certificates.p12
-          mobileprovision-path: ios/tieniu.mobileprovision
+          p12-path: ios/app.p12
+          mobileprovision-path: ios/app.mobileprovision
           # p12-base64: ${{ secrets.P12_BASE64 }}
           # p12-cer-base64: ${{ secrets.P12_CER_BASE64 }}
           # mobileprovision-base64: ${{ secrets.MOBILEPROVISION_BASE64 }}
@@ -77,13 +78,13 @@ jobs:
           # export-method: 'ad-hoc'
           export-method: 'development'
           configuration: 'Release'
-          output-path: /Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa
+          output-path: /Users/runner/work/devops-crm-app/outputs/tieniuniu.ipa
       - name: Upload Artifact
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         uses: actions/upload-artifact@v1
         with:
           name: tieniuniu.ipa
-          path: /Users/runner/work/AutoBuild-React-Native/outputs/
+          path: /Users/runner/work/devops-crm-app/outputs/
       - name: Upload Artifact Success
         if: ${{ github.event.inputs.uploadArtifact == 'true' }}
         run: |
@@ -92,7 +93,7 @@ jobs:
       - name: push to fir
         id: PushToFir
         run: |
-          curl -F 'file=@/Users/runner/work/AutoBuild-React-Native/outputs/tieniuniu.ipa' -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
+          curl -F 'file=@/Users/runner/work/devops-crm-app/outputs/tieniuniu.ipa' -F '_api_key=${{ secrets.PGYER_API_KEY }}' https://www.pgyer.com/apiv2/app/upload
         continue-on-error: true
       - name: Send fir error notify
         id: firErrorMessage

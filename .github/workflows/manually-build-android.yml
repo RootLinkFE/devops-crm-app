@@ -19,6 +19,7 @@ env:
   GITLAB_REPO_URL: ${{ secrets.GITLAB_REPO_URL }}
   WECOM_WEBHOOK_KEY: ${{ secrets.WECOM_WEBHOOK_KEY }}
   MENTION_MOBILE_LIST: ${{ secrets.MENTION_MOBILE_LIST }}
+  PROJECT_NAME: ${{ secrets.PROJECT_NAME }}
 
 jobs:
   build-android:

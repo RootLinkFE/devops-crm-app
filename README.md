@@ -1,8 +1,8 @@
-# AutoBuild-React-Native
+# devops-crm-app
 
-[![build workflow](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/build.yml/badge.svg)](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/build.yml)
-[![Android](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-android.yml/badge.svg)](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-android.yml)
-[![IOS](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-ios.yml/badge.svg)](https://github.com/RootLinkFE/AutoBuild-React-Native/actions/workflows/manually-build-ios.yml)
+[![build workflow](https://github.com/RootLinkFE/devops-crm-app/actions/workflows/build.yml/badge.svg)](https://github.com/RootLinkFE/devops-crm-app/actions/workflows/build.yml)
+[![Android](https://github.com/RootLinkFE/devops-crm-app/actions/workflows/manually-build-android.yml/badge.svg)](https://github.com/RootLinkFE/devops-crm-app/actions/workflows/manually-build-android.yml)
+[![IOS](https://github.com/RootLinkFE/devops-crm-app/actions/workflows/manually-build-ios.yml/badge.svg)](https://github.com/RootLinkFE/devops-crm-app/actions/workflows/manually-build-ios.yml)
 
 利用 Action 构建私库 gitlab rn app 代码
 
